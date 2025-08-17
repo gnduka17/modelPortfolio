@@ -164,11 +164,14 @@
     footer h2 { margin: 0 0 8px; font-size: 22px; }
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+      /* Fix overlap: hide IG icon while modal is open, ensure X is above */
+    .modal .close { z-index: 1100; }
+    .modal-open .social-link { opacity: 0; pointer-events: none; }
   </style>
 </head>
 <body>
   <h1>Gloria Nduka</h1>
-  <p>LA‑based model and flexible traveler. This is my portfolio&#58;&#41; Open for bookings and collaborations.</p>
+  <p>LA‑based model and flexible traveler. This is my portfolio :) — open for bookings and collaborations worldwide.</p>
 
   <!-- Instagram link -->
   <a class="social-link" href="https://instagram.com/gloria_n206" target="_blank" rel="noopener" aria-label="Instagram: @gloria_n206">
@@ -271,10 +274,12 @@
       const idx = thumbs.indexOf(imgEl);
       showAt(idx);
       modal.classList.add('open');
+      document.body.classList.add('modal-open');
     }
 
     function closeModal() {
       modal.classList.remove('open');
+      document.body.classList.remove('modal-open');
       modalImg.src = '';
       currentIndex = -1;
     }
@@ -311,17 +316,6 @@
       }, { passive: true });
       scrollPrompt.addEventListener('click', () => scrollPrompt.classList.add('is-hidden'));
     }
-
-    // Auto-hide the scroll-down prompt (timeout, scroll, or click)
-    // const scrollPrompt = document.querySelector('.scroll-down');
-    // if (scrollPrompt) {
-    //   setTimeout(() => scrollPrompt.classList.add('is-hidden'), 1800);
-    //   window.addEventListener('scroll', () => {
-    //     if (window.scrollY > 40) scrollPrompt.classList.add('is-hidden');
-    //   }, { passive: true });
-    //   scrollPrompt.addEventListener('click', () => scrollPrompt.classList.add('is-hidden'));
-    // });
-    // }
   </script>
 </body>
 </html>
