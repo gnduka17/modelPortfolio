@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gloria Nduka — Portfolio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      text-align: center;
+      position: relative;
+      min-height: 100vh;
+    }
+    h1 { margin-bottom: 20px; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: 1fr; }
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.2s;
+      display: block;
+    }
+    .gallery img:hover { transform: scale(1.03); }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      padding: 24px;
+      background-color: rgba(0,0,0,0.92);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.open { display: flex; }
+
+    .modal-content {
+      margin: 0;
+      display: block;
+      max-width: 95vw;
+      max-height: 92vh;
+      border-radius: 12px;
+    }
+    .close {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 50px;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      padding: 12px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+    }
+    .nav-arrow:hover { background: rgba(0,0,0,0.6); }
+    .nav-prev { left: 20px; }
+    .nav-next { right: 20px; }
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 56px;
+      min-width: 56px;
+      padding: 0 14px;
+      border-radius: 9999px;
+      border: none;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      backdrop-filter: blur(4px);
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.28); }
+    .nav-btn:active { transform: translateY(-50%) scale(0.98); }
+    .nav-prev { left: 16px; }
+    .nav-next { right: 16px; }
+
+    /* Scroll down indicator */
+    .scroll-down {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: #333;
+      animation: bounce 1.5s infinite;
+      cursor: pointer;
+      z-index: 999;
+      background: rgba(255,255,255,0.8);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      opacity: 1;
+      transition: opacity 0.35s ease;
+    }
+    .scroll-down.is-hidden { opacity: 0; pointer-events: none; }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translate(-50%, 0);}
+      40% {transform: translate(-50%, -10px);}
+      60% {transform: translate(-50%, -5px);}
+    }
+
+    /* Instagram icon */
+    .social-link {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .social-link:hover { background: rgba(0,0,0,0.8); }
+
+    footer {
+      margin: 36px auto 60px;
+      max-width: 900px;
+      padding: 16px 12px;
+      color: #333;
+      line-height: 1.6;
+    }
+    footer h2 { margin: 0 0 8px; font-size: 22px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>Gloria Nduka</h1>
+  <p>LA‑based model and flexible traveler. This is my portfolio&#58;&#41; Open for bookings and collaborations.</p>
+
+  <!-- Instagram link -->
+  <a class="social-link" href="https://instagram.com/gloria_n206" target="_blank" rel="noopener" aria-label="Instagram: @gloria_n206">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-width="2"/>
+      <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+      <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+    </svg>
+  </a>
+
+  <div class="gallery" id="gallery">
+    <img src="portfolio/image1.JPG" alt="Image 1" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image2.JPG" alt="Image 2" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image3.jpeg" alt="Image 3" onclick="openModal(this)" loading="lazy">
+
+ 
+
+    <img src="portfolio/image9.jpeg" alt="Image 9" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image5.jpeg" alt="Image 5" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image6.jpeg" alt="Image 6" onclick="openModal(this)" loading="lazy">
+
+    <img src="portfolio/image22.jpeg" alt="Image 22" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image8.jpeg" alt="Image 8" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image11.JPG" alt="Image 11" onclick="openModal(this)" loading="lazy">
+    
+    <img src="portfolio/image10.jpeg" alt="Image 10" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image4.jpg" alt="Image 4" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image20.jpg" alt="Image 20" onclick="openModal(this)" loading="lazy">
+
+
+
+    <img src="portfolio/image12.jpg" alt="Image 12" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image13.jpg" alt="Image 13" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image7.jpeg" alt="Image 7" onclick="openModal(this)" loading="lazy">
+
+
+    <img src="portfolio/image27.jpeg" alt="Image 27" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image18.jpeg" alt="Image 18" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image16.jpeg" alt="Image 16" onclick="openModal(this)" loading="lazy">
+
+    <img src="portfolio/image14.jpeg" alt="Image 14" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image17.jpeg" alt="Image 17" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image15.jpeg" alt="Image 15" onclick="openModal(this)" loading="lazy">
+
+    <img src="portfolio/image25.jpeg" alt="Image 25" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image19.jpeg" alt="Image 19" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image23.jpeg" alt="Image 23" onclick="openModal(this)" loading="lazy">
+
+
+    <img src="portfolio/image21.jpeg" alt="Image 21" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image26.jpeg" alt="Image 26" onclick="openModal(this)" loading="lazy">
+    <img src="portfolio/image24.jpeg" alt="Image 24" onclick="openModal(this)" loading="lazy">
+  </div>
+
+  <div class="scroll-down" onclick="scrollToGallery()">▼ Scroll Down ▼</div>
+
+  <!-- Modal -->
+  <div id="myModal" class="modal" aria-modal="true" role="dialog" aria-label="Image viewer">
+    <button class="nav-btn nav-prev" id="prevBtn" aria-label="Previous image">&#10094;</button>
+    <button class="nav-btn nav-next" id="nextBtn" aria-label="Next image">&#10095;</button>
+    <span class="close" onclick="closeModal()">&times;</span>
+    <span class="nav-arrow nav-prev" onclick="showAt(currentIndex - 1)">&#10094;</span>
+    <img class="modal-content" id="modalImg" alt="Full size image">
+    <span class="nav-arrow nav-next" onclick="showAt(currentIndex + 1)">&#10095;</span>
+  </div>
+
+  <footer>
+    <h2>Contact & Measurements</h2>
+    <div class="contact-grid">
+      <div>
+        <strong>Booking:</strong> <a href="mailto:nduka1204@gmail.com">nduka1204@gmail.com</a><br/>
+        <strong>Instagram:</strong> <a href="https://instagram.com/gloria_n206" target="_blank" rel="noopener">@gloria_n206</a><br/>
+        <strong>Based:</strong> Los Angeles, CA (available to travel)
+      </div>
+      <div>
+        <strong>Height:</strong> 5'11"<br/>
+        <strong>Bust–Waist–Hips:</strong> 36"–29"–40"<br/>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const modal = document.getElementById('myModal');
+    const modalImg = document.getElementById('modalImg');
+    const gallery = document.getElementById('gallery');
+    const thumbs = Array.from(gallery.querySelectorAll('img'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentIndex = -1;
+
+    function showAt(index) {
+      if (index < 0) index = thumbs.length - 1;
+      if (index >= thumbs.length) index = 0;
+      currentIndex = index;
+      modalImg.src = thumbs[currentIndex].src;
+    }
+
+    function openModal(imgEl) {
+      const idx = thumbs.indexOf(imgEl);
+      showAt(idx);
+      modal.classList.add('open');
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modalImg.src = '';
+      currentIndex = -1;
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    modalImg.addEventListener('click', (e) => e.stopPropagation());
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex - 1); });
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showAt(currentIndex + 1); });
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowRight') {
+        showAt(currentIndex + 1);
+      } else if (e.key === 'ArrowLeft') {
+        showAt(currentIndex - 1);
+      }
+    });
+
+    function scrollToGallery() {
+      document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Auto-hide the scroll-down prompt (timeout, scroll, or click)
+    const scrollPrompt = document.querySelector('.scroll-down');
+    if (scrollPrompt) {
+      setTimeout(() => scrollPrompt.classList.add('is-hidden'), 1800);
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) scrollPrompt.classList.add('is-hidden');
+      }, { passive: true });
+      scrollPrompt.addEventListener('click', () => scrollPrompt.classList.add('is-hidden'));
+    }
+
+    // Auto-hide the scroll-down prompt (timeout, scroll, or click)
+    // const scrollPrompt = document.querySelector('.scroll-down');
+    // if (scrollPrompt) {
+    //   setTimeout(() => scrollPrompt.classList.add('is-hidden'), 1800);
+    //   window.addEventListener('scroll', () => {
+    //     if (window.scrollY > 40) scrollPrompt.classList.add('is-hidden');
+    //   }, { passive: true });
+    //   scrollPrompt.addEventListener('click', () => scrollPrompt.classList.add('is-hidden'));
+    // });
+    // }
+  </script>
+</body>
+</html>
